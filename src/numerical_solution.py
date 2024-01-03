@@ -1,45 +1,34 @@
 from scipy import *
 import numpy as np
 from scipy import integrate
-import matplotlib.pyplot as plt
-from dataclasses import dataclass
-from enum import Enum
-from constants import *
 
 
-class CoefType(Enum):
-    constant: int = 0
-    nonconstant: int = 1
 
 
-def f_real(t, y, s_val: float, vals: Constants, alpha: float, coef_type: CoefType):
-    if coef_type is CoefType.constant:
-        z = vals.val_x_fr * 0 - vals.val_a_top
-    else:
-        z = vals.val_x_fr * t - vals.val_a_top
-    coef = calc_C(s=s_val, vals=vals) * z ** alpha
+def f_real(t, y, s: complex, z_func: callable, C_func: callable, alpha:float):
+    coef = C_func(s) * z_func(t) ** alpha
     return [
         y[1],
         coef * y[0]
     ]
 
 
-def boundary_residual_real(ya, yb, s: float, vals: Constants):
+def boundary_residual_real(ya, yb, s: complex, Pa: complex, Pb: complex):
     return np.array([
-        ya[1] - calc_b(x_D=0, vals=vals) * vals.val_x_fr / s,
-        yb[1] - 0
+        ya[1] - Pa,
+        yb[1] - Pb,
     ])
 
 
-def get_numerical_solution(s_val: float, constants_values: Constants, alpha: float, coef_type: CoefType):
-    f = lambda t, y: f_real(t, y, s_val, constants_values, alpha, coef_type)
-    boundary_residual = lambda ya, yb: boundary_residual_real(ya, yb, s_val, constants_values)
+def get_numerical_solution(s_val: complex, alpha: float, z_func: callable, C_func: callable, Pa: complex, Pb: complex):
+    f = lambda t, y: f_real(t, y, s=s_val, z_func=z_func, C_func=C_func, alpha=alpha)
+    boundary_residual = lambda ya, yb: boundary_residual_real(ya, yb, s_val, Pa=Pa, Pb=Pb)
 
     a, b = 0, 1
-    N = 1000
+    N = 1001
     x = np.linspace(a, b, N)
     y_guess = np.zeros((2, N), dtype=float)
 
     sol = integrate.solve_bvp(f, boundary_residual, x, y_guess)
 
-    return sol.y[0][0]
+    return sol.y[0]
