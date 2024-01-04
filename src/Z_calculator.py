@@ -39,7 +39,7 @@ class z_class:
         pass
 
     def __call__(self, x: float):
-        return -x + complex(1, 1)
+        return 2 - x + 0.2
 
     def derivative(self, x: float):
         return -1

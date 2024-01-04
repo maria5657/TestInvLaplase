@@ -8,15 +8,15 @@ from Z_calculator import z_class
 
 
 def C_func(s: complex):
-    return s
+    return 0.01 * s
 
 if __name__ == '__main__':
     import matplotlib.pyplot as plt
 
     Pa = 10
     Pb = 20
-    ALPHA = 0
-    S = complex(1, 1)
+    ALPHA = -1
+    S = 10
 
     p_a = get_solution(s=S, C_func=C_func, Pa=Pa, Pb=Pb)
     p_a_a = get_alt(s=S, C_func=C_func, Pa=Pa, Pb=Pb)
@@ -24,10 +24,10 @@ if __name__ == '__main__':
     p_df = get_fd_solution(s_val=S, alpha=ALPHA, z_func=z_class(), C_func=C_func, Pa=Pa, Pb=Pb)
     p_our = [get_analytic_solution(s=S, C_func=C_func, alpha=ALPHA,  z=z_class(), x=_x, Pa=Pa, Pb=Pb) for _x in np.linspace(0, 1, 1000)]
 
-    plt.plot(p_a, label='analytic', lw=5)
-    plt.plot(p_a_a, label='analytic2', lw=4)
+    #plt.plot(p_a, label='analytic', lw=5)
+    #plt.plot(p_a_a, label='analytic2', lw=4)
     plt.plot(p_n, label='numeric', lw=3)
     plt.plot(p_df, label='df', lw=2)
-    plt.plot(p_our, label='our')
+    plt.plot(np.array(p_our), label='our')
     plt.legend()
     plt.show()

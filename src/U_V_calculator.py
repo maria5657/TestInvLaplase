@@ -29,3 +29,17 @@ def calc_U_2_derivative(a: NDArray, Z_powers: NDArray):
     for n in range(1, N):
         rez += a[n] * Z_powers[n - 1] / factorial(n - 1)
     return rez
+
+def calc_V_2(b: NDArray, Z_powers: NDArray):
+    N = min(b.size, Z_powers.size)
+    rez = 0
+    for n in range(N):
+        rez += ((-1) ** n) * b[n] * Z_powers[n] / factorial(n)
+    return rez
+
+def calc_V_2_derivative(b: NDArray, Z_powers: NDArray):
+    N = min(b.size, Z_powers.size)
+    rez = 0
+    for n in range(1, N):
+        rez += ((-1) ** n) * b[n] * Z_powers[n - 1] / factorial(n - 1)
+    return rez
