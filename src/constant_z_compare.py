@@ -18,8 +18,8 @@ if __name__ == '__main__':
     ALPHA = -1
     S = 10
 
-    p_a = get_solution(s=S, C_func=C_func, Pa=Pa, Pb=Pb)
-    p_a_a = get_alt(s=S, C_func=C_func, Pa=Pa, Pb=Pb)
+    #p_a = get_solution(s=S, C_func=C_func, Pa=Pa, Pb=Pb)
+    #p_a_a = get_alt(s=S, C_func=C_func, Pa=Pa, Pb=Pb)
     p_n = get_numerical_solution(s_val=S, alpha=ALPHA, z_func=z_class(), C_func=C_func, Pa=Pa, Pb=Pb)
     p_df = get_fd_solution(s_val=S, alpha=ALPHA, z_func=z_class(), C_func=C_func, Pa=Pa, Pb=Pb)
     p_our = [get_analytic_solution(s=S, C_func=C_func, alpha=ALPHA,  z=z_class(), x=_x, Pa=Pa, Pb=Pb) for _x in np.linspace(0, 1, 1000)]
