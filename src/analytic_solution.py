@@ -5,7 +5,7 @@ from calc_a_b import  calc_a_b
 from eq_coefs import  solve_koefs_eq
 from sqrt_complex import sqrt_complex
 import special_functions as sf
-
+import pyhypergeomatrix as hyper
 
 def get_analytic_solution(s: complex, C_func: callable, alpha: float,  z: z_class, x: float, Pa: float, Pb: float):
     # решается следующее уравнение:
